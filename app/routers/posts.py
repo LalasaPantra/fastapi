@@ -1,4 +1,4 @@
-from fastapi import Body, HTTPException, APIRouter, Depends, Query, Response
+from fastapi import Body, HTTPException, APIRouter, Depends, Query
 from .. import models as model
 from ..database import SessionDep
 from typing import Annotated

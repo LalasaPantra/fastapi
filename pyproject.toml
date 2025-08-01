@@ -12,11 +12,13 @@ dependencies = [
     "psycopg2-binary>=2.9.10",
     "pydantic-settings>=2.10.1",
     "pyjwt>=2.10.1",
+    "pytest>=8.4.1",
     "python-dotenv>=1.1.0",
     "sqlmodel>=0.0.24",
+    "uvicorn>=0.34.3",
 ]
 
 [tool.uv.workspace]
 members = [
-    "app",
+    #"app",
 ]

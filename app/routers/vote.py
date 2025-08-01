@@ -31,4 +31,4 @@ def vote_post(
         return {"message": "Vote recorded successfully"}
     session.delete(vote)
     session.commit()
-    return {"message": "Vote removed successfully"}
+    return {"message": "Vote deleted"}
