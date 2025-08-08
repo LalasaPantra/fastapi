@@ -9,7 +9,7 @@ def test_get_all_posts(client: TestClient, posts):
         "limit": 10,
         "offset": 0,
     }
-    response = client.get("/", params=parameters)
+    response = client.get("/posts", params=parameters)
     posts_response = [models.PostOut.model_validate(post) for post in response.json()]
     assert len(posts_response) == len(posts)
     assert response.status_code == 200

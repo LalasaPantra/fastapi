@@ -9,7 +9,7 @@ from ..oauth2 import get_current_user
 router = APIRouter(tags=["posts"])
 
 
-@router.get("/", response_model=list[model.PostOut])
+@router.get("/posts", response_model=list[model.PostOut])
 def get_all_posts(
     session: SessionDep, filter_query: Annotated[model.FilterParams, Query()]
 ):

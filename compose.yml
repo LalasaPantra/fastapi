@@ -1,0 +1,58 @@
+services:
+  web:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+
+    # Host the FastAPI application on port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=Jumbo
+      - DB_NAME=fastapi
+      - SECRET_KEY=af8e1a049c0296bdb15191f466a0bd82020e047b9e1c344c4a8d6c08a2edb482
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    develop:
+      # Create a `watch` configuration to update the app
+      # https://docs.docker.com/compose/file-watch/#compose-watch-versus-bind-mounts
+      watch:
+        # Sync the working directory with the `/app` directory in the container
+        - action: sync
+          path: .
+          target: /app
+          # Exclude the project virtual environment — it could be for a
+          # different platform in the container
+          ignore:
+            - .venv/
+          # Rebuild the image if dependencies change by checking uv.lock
+        - action: rebuild
+          path: ./uv.lock
+    volumes:
+      - ./app:/app/app
+
+    depends_on:
+      - db
+  db:
+    # Use the official PostgreSQL image
+    image: postgres:latest
+
+    # Set environment variables for the database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Jumbo
+      POSTGRES_DB: fastapi
+
+    # Expose the database port
+    ports:
+      - "5432:5432"
+
+    # Use a volume to persist data
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
+    # Use a named volume to persist database data
+    driver: local
