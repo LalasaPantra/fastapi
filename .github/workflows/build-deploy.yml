@@ -65,5 +65,10 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
-      
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploying to production
+        run: echo "Deploying to production environment"
        
